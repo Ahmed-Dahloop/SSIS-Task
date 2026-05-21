@@ -28,9 +28,11 @@ Execute SQL Task
 Import the following employee data fields from Excel:
 
 Column Name	Data Type
-emp_id	INT
+emp_id	        INT
 emp_name	VARCHAR
-Gender	VARCHAR
+Gender	        VARCHAR
+
+
 🗂 Package Workflow
         +-------------------+
         | Data Flow Task    |
@@ -47,6 +49,8 @@ Gender	VARCHAR
 | SQL Task|             | C# Message  |
 | Backup  |             | Failure Msg |
 +---------+             +-------------+
+
+
 📥 Step 1 - Create SQL Table
 CREATE TABLE Employees
 (
@@ -54,6 +58,8 @@ CREATE TABLE Employees
     emp_name VARCHAR(100),
     Gender VARCHAR(20)
 );
+
+
 📊 Step 2 - Prepare Excel File
 
 Create an Excel file named:
@@ -66,6 +72,8 @@ emp_id	emp_name	Gender
 1	Ahmed	Male
 2	Sara	Female
 3	Omar	Male
+
+
 🔄 Step 3 - Create SSIS Package
 Inside Control Flow
 
@@ -74,8 +82,9 @@ Add:
 ✅ Data Flow Task
 
 Purpose:
-
 Import data from Excel into SQL Server table.
+
+
 🔧 Step 4 - Configure Data Flow
 Inside Data Flow
 
@@ -104,10 +113,10 @@ TO DISK = 'D:\Backup\SchoolDB.bak'
 WITH FORMAT,
 MEDIANAME = 'SQLServerBackups',
 NAME = 'Full Backup of SchoolDB';
+
+
 ❌ Step 6 - Handle Failure Using C#
-
 Add:
-
 ✅ Script Task
 
 Connect it with:
@@ -123,10 +132,10 @@ using Microsoft.SqlServer.Dts.Runtime;
 
 public void Main()
 {
-    MessageBox.Show("The task has been failed");
-
-    Dts.TaskResult = (int)ScriptResults.Success;
+MessageBox.Show("The task has been failed");
+Dts.TaskResult = (int)ScriptResults.Success;
 }
+
 ✅ Expected Result
 If Import Succeeds
 Data inserted into SQL Server table.
@@ -134,6 +143,8 @@ Full database backup created automatically.
 If Import Fails
 C# message box appears:
 The task has been failed
+
+
 📌 Concepts Learned
 
 This task demonstrates:
